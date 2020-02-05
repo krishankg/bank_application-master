@@ -1,0 +1,40 @@
+{% extends 'base.html'%}
+
+{% block title %} Bank Details {% endblock %}
+
+
+{% block content %} 
+
+<div class="container">
+
+	<div class='col col-sm-6 mx-auto py-2 my-3 card'>
+		<h3 class="text-center">Searching Bank Details</h3>
+		<form class="form" method="GET" action="{% url 'api_list' %}">
+			<label>Enter IFSC Code</label>
+			<input class="form-control" type="text" name="q" required><br>
+			<input class="btn btn-primary" type="submit" value="Search">
+			
+		</form>
+	</div>
+   
+	
+	{% if request.GET.q %}
+	
+	{% for object in objects %}
+	<div class="col col-sm-6 mx-auto card py-2 my-3">
+      <p><strong>Branch Name</strong> : {{ object.branch_name |title}}</p>
+      <p><strong>Bank Name</strong> : {{ object.bank_name|title  }}</p>
+      
+      <p><strong>Address</strong>   : {{ object.address|title }}</p>
+      <p><strong>State</strong> : {{ object.state|title  }}</p>
+     
+	{% empty %}
+     </div>
+	{% endfor %}
+	{% endif %}
+
+</div>
+
+
+
+{% endblock %}

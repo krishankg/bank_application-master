@@ -1,0 +1,48 @@
+{% extends 'base.html'%}
+
+{% block title %} Bank Details {% endblock %}
+
+
+{% block content %} 
+
+<div class="container">
+ 
+	<div class='col col-sm-6 mx-auto py-4 card my-3'>
+		<h3 class="text-center"> Searching Bank Details </h3>
+		<form class="form" method="GET" action="{% url 'api_details' %}">
+			<label>Enter Bank Name</label>
+			<input class="form-control" type="text" name="q1" required><br>
+			<label>Enter City Name</label>
+			<input class="form-control" type="text" name="q2" required><br>
+			<input class="btn btn-primary" type="submit" value="Search">
+			
+		</form>
+	</div>
+
+   
+	
+	{% if request.GET.q1 and request.GET.q2 %}
+	{% if objects %}
+	<h4 class="text-center"> All banks in City </h4>
+	{% else %}
+	<h4 class="text-center">Not Found Any Bank </h4>
+    {% endif %}
+	{% for object in objects %}
+	<div class="col col-sm-6 mx-auto card py-2 my-3">
+      <p>Branch Name : {{ object.branch_name |title}}</p>
+      <p>Bank Name : {{ object.bank_name|title  }}</p>
+      <p>City : {{ object.city|title  }}</p>
+      <p>Address   : {{ object.address|title }}</p>
+      <p>State : {{ object.state|title  }}</p>
+      </div>
+     
+	{% empty %}
+
+	{% endfor %}
+	{% endif %}
+
+</div>
+
+
+
+{% endblock %}
